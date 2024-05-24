@@ -1,0 +1,36 @@
+<configuration>
+    <springProperty scope="context" name="applicationName" source="spring.application.name" defaultValue="vcis-pod-service"/>
+
+    <appender name="datadog" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
+                <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter" />
+                <appendLineSeparator>true</appendLineSeparator>
+            </layout>
+        </encoder>
+    </appender>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level [correlationId=%X{correlationId}] [traceId=%X{dd.trace_id} spanId=%X{dd.span_id}] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.example.cacherecipes" level="info" additivity="false">
+        <springProfile name="local,test,default">
+            <appender-ref ref="console"/>
+        </springProfile>
+<!--        <springProfile name="dev,stg,it,prod">-->
+<!--            <appender-ref ref="datadog"/>-->
+<!--        </springProfile>-->
+    </logger>
+
+    <root level="info">
+        <springProfile name="local,test,default">
+            <appender-ref ref="console"/>
+        </springProfile>
+<!--       <springProfile name="dev,stg,it,prod">-->
+<!--            <appender-ref ref="datadog"/>-->
+<!--        </springProfile>-->
+    </root>
+</configuration>

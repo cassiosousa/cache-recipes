@@ -1,0 +1,26 @@
+CREATE TABLE recipes
+(
+    id                 bigint         NOT NULL PRIMARY KEY,
+    "name"             VARCHAR        NOT NULL,
+    ingredients        text[]         NOT NULL,
+    instructions       text[]         NOT NULL,
+    prepTimeMinutes    integer        NOT NULL,
+    cookTimeMinutes    integer        NOT NULL,
+    servings           integer        NOT NULL,
+    difficulty         VARCHAR        NOT NULL,
+    cuisine            VARCHAR        NOT NULL,
+    caloriesPerServing integer        NOT NULL,
+    tags               text[] NOT NULL,
+    userId             integer        NOT NULL,
+    image              VARCHAR        NOT NULL,
+    rating             DECIMAL(10, 2) NOT NULL,
+    reviewCount        integer        NOT NULL,
+    mealType           text[] NOT NULL
+);
+
+CREATE TABLE recipes_error
+(
+    id        bigint    NOT NULL PRIMARY KEY,
+    createdAt TIMESTAMP NOT NULL,
+    status    VARCHAR   NOT NULL
+);
